@@ -31,7 +31,7 @@ module Hubspot
         end
 
         engt_hash = { engagement: { active: true, type: type } }
-        assc_hash = { associations: { contactIds: (contactids.is_a?(Array) ? contactIds : [contactids]) } }
+        assc_hash = { associations: { contactIds: (contactids.is_a?(Array) ? contactids : [contactids]) } }
         meta_hash = { metadata: params }
         post_data = [engt_hash, assc_hash, meta_hash].inject(&:merge)
 
