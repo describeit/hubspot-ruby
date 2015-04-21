@@ -25,15 +25,22 @@ module Hubspot
       # @param contactids [String/Array] id of contact(s) to add this engagement
       # @param params [Hash] hash of properties to update
       # @return [Hubspot::Engagement] self
-      def create!(type, contactids, params={})
+      def create!(type, contactid, params={})
         unless VALID_TYPES.include?(type)
           raise Hubspot::InvalidParams, 'expecting valid Engagement Type (Note, Task, Call, Email, Meeting)'
         end
 
-        engt_hash = { engagement: { active: true, type: type } }
+        unless params[:body].present?
+          raise Hubspot::InvalidParams, 'message body required for all Engagement Types'
+        end
+
+        engagement = { active: true, type: type }
+        engagement.merge({ timestamp: params[:timestamp].to_id }) if params[:timestamp].present?
+        engagement.merge({ onwerId: params[:owner_id] }) if params[:owner_id].present?
+
         assc_hash = { associations: { contactIds: (contactids.is_a?(Array) ? contactids : [contactids]) } }
-        meta_hash = { metadata: params }
-        post_data = [engt_hash, assc_hash, meta_hash].inject(&:merge)
+        meta_hash = { metadata: { body: params[:body] } }
+        post_data = [{ engagement: engagement }, assc_hash, meta_hash].inject(&:merge)
 
         response = Hubspot::Connection.post_json(CREATE_ENGAGEMENT_PATH, params: {}, body: post_data )
         new(response)
@@ -54,16 +61,16 @@ module Hubspot
     end
 
     attr_reader :contacts, :companies
-    attr_reader :properties, :response
+    attr_reader :properties, :engagement
     attr_reader :eid, :etype
 
     def initialize(response_hash)
-      @response = response_hash
       @eid = response_hash["engagement"]["id"]
       @etype = response_hash["engagement"]["type"]
       @contacts = response_hash["associations"]["contactIds"]
       @companies = response_hash["associations"]["companyIds"]
       @properties = response_hash["metadata"]
+      @engagement = response_hash["engagement"]
     end
 
     def [](property)
@@ -78,8 +85,16 @@ module Hubspot
       @etype
     end
 
+    def primary_owner
+      @engagement["ownerId"]
+    end
+
     def primary_contact
       @contacts.first unless @contacts.empty?
+    end
+
+    def timestamp
+      DateTime.strptime(@engagement["timestamp"], '%s')
     end
 
     def body
