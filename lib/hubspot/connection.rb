@@ -47,7 +47,6 @@ module Hubspot
             params.delete(k)
           end
         end
-debugger
         raise(Hubspot::MissingInterpolation.new("Interpolation not resolved")) if path =~ /:/
 
         query = params.map do |k,v|

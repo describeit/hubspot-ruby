@@ -6,9 +6,9 @@ module Hubspot
   #
   class Engagement
     CREATE_ENGAGEMENT_PATH = "/engagements/v1/engagements"
-    UPDATE_ENGAGEMENT_PATH = "/engagements/v1/engagements/:engagementId"
-    DELETE_ENGAGEMENT_PATH = "/engagements/v1/engagements/:engagementId"
-    GET_ENGAGEMENT_PATH = "/engagements/v1/engagements/:engagementId"
+    UPDATE_ENGAGEMENT_PATH = "/engagements/v1/engagements/:engagement_id"
+    DELETE_ENGAGEMENT_PATH = "/engagements/v1/engagements/:engagement_id"
+    GET_ENGAGEMENT_PATH = "/engagements/v1/engagements/:engagement_id"
 
     NOTE = 'NOTE'         # props:  body
     TASK = 'TASK'         # props:  body, due_date, status
