@@ -10,6 +10,7 @@ require 'hubspot/form'
 require 'hubspot/blog'
 require 'hubspot/topic'
 require 'hubspot/deal'
+require 'hubspot/engagement'
 
 module Hubspot
   def self.configure(config={})
