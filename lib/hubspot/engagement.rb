@@ -54,10 +54,11 @@ module Hubspot
     end
 
     attr_reader :contacts, :companies
-    attr_reader :properties
+    attr_reader :properties, :response
     attr_reader :eid, :etype
 
     def initialize(response_hash)
+      @response = response_hash
       @eid = response_hash["engagement"]["id"]
       @etype = response_hash["engagement"]["type"]
       @contacts = response_hash["associations"]["contactIds"]
