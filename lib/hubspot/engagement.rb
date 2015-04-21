@@ -25,13 +25,13 @@ module Hubspot
       # @param contactids [String/Array] id of contact(s) to add this engagement
       # @param params [Hash] hash of properties to update
       # @return [Hubspot::Engagement] self
-      def create!(type=NOTE, contactids, params={})
+      def create!(type, contactids, params={})
         unless VALID_TYPES.include?(type)
           raise Hubspot::InvalidParams, 'expecting valid Engagement Type (Note, Task, Call, Email, Meeting)'
         end
 
         engt_hash = { engagement: { active: true, type: type } }
-        assc_hash = { associations: { contactIds: (contactids.is_a?(Array) ? contactIds : [contactIds]) } }
+        assc_hash = { associations: { contactIds: (contactids.is_a?(Array) ? contactIds : [contactids]) } }
         meta_hash = { metadata: params }
         post_data = [engt_hash, assc_hash, meta_hash].inject(&:merge)
 
