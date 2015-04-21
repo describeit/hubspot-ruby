@@ -30,9 +30,9 @@ module Hubspot
           raise Hubspot::InvalidParams, 'expecting valid Engagement Type (Note, Task, Call, Email, Meeting)'
         end
 
-        engt_hash = {engagement: { active: true, type: type }}
-        assc_hash = {associations: {contactIds: (contactids.is_a?(Array) ? contactIds : [contactIds]) }
-        meta_hash = {metadata: params}
+        engt_hash = { engagement: { active: true, type: type } }
+        assc_hash = { associations: { contactIds: (contactids.is_a?(Array) ? contactIds : [contactIds]) } }
+        meta_hash = { metadata: params }
         post_data = [engt_hash, assc_hash, meta_hash].inject(&:merge)
 
         response = Hubspot::Connection.post_json(CREATE_ENGAGEMENT_PATH, params: {}, body: post_data )
