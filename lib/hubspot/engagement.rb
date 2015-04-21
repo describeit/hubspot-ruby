@@ -41,7 +41,7 @@ module Hubspot
 
       def create_from_email!(type, email, params={})
         if contact = Hubspot::Contact.find_by_email(email)
-          create!(type, [contact.id], params)
+          create!(type, [contact.vid], params)
         end
       end
 

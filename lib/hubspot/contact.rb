@@ -30,11 +30,11 @@ module Hubspot
       # {https://developers.hubspot.com/docs/methods/contacts/get_contacts}
       # {https://developers.hubspot.com/docs/methods/contacts/get_recently_updated_contacts}
       def all(opts={})
-        recent = opts.delete(:recent) { false } 
-        path, opts = 
-        if recent 
-          [RECENT_CONTACTS_PATH, Hubspot::ContactProperties.add_default_parameters(opts)] 
-        else 
+        recent = opts.delete(:recent) { false }
+        path, opts =
+        if recent
+          [RECENT_CONTACTS_PATH, Hubspot::ContactProperties.add_default_parameters(opts)]
+        else
           [CONTACTS_PATH, opts]
         end
 
@@ -75,14 +75,14 @@ module Hubspot
         if batch_mode
           #TODO: transform response
           response
-        else 
+        else
           new(response)
         end
       end
 
       # NOTE: problem with batch api endpoint
       # {https://developers.hubspot.com/docs/methods/contacts/get_contact_by_utk}
-      # {https://developers.hubspot.com/docs/methods/contacts/get_batch_by_utk} 
+      # {https://developers.hubspot.com/docs/methods/contacts/get_batch_by_utk}
       def find_by_utk(utks)
         batch_mode, path, params = case utks
         when String then [false, GET_CONTACT_BY_UTK_PATH, { contact_utk: utks }]
