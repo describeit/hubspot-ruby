@@ -60,9 +60,9 @@ module Hubspot
     def initialize(response_hash)
       @eid = response_hash["engagement"]["id"]
       @etype = response_hash["engagement"]["type"]
-      @contacts = Hubspot::Utils.properties_to_hash(response_hash["associations"]["contactIds"])
-      @companies = Hubspot::Utils.properties_to_hash(response_hash["associations"]["companyIds"])
-      @properties = Hubspot::Utils.properties_to_hash(response_hash["metadata"])
+      @contacts = response_hash["associations"]["contactIds"]
+      @companies = response_hash["associations"]["companyIds"]
+      @properties = response_hash["metadata"]
     end
 
     def [](property)
