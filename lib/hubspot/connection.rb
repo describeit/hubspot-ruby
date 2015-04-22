@@ -14,7 +14,6 @@ module Hubspot
         no_parse = opts[:params].delete(:no_parse) { false }
 
         url = generate_url(path, opts[:params])
-debugger
         response = put(url, body: opts[:body].to_json, headers: { 'Content-Type' => 'application/json' }, format: :json)
         raise(Hubspot::RequestError.new(response)) unless response.success?
 
