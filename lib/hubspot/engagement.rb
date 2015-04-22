@@ -38,7 +38,7 @@ module Hubspot
         engagement.merge({ timestamp: params[:timestamp].to_id }) if params[:timestamp].present?
         engagement.merge({ onwerId: params[:owner_id] }) if params[:owner_id].present?
 
-        assc_hash = { associations: { contactIds: [contactid]) } }
+        assc_hash = { associations: { contactIds: [contactid] } }
         meta_hash = { metadata: { body: params[:body] } }
         post_data = [{ engagement: engagement }, assc_hash, meta_hash].inject(&:merge)
 
