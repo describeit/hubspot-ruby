@@ -11,7 +11,7 @@ module Hubspot
     GET_ENGAGEMENT_PATH = "/engagements/v1/engagements/:engagement_id"
 
     NOTE = 'NOTE'         # props:  body
-    TASK = 'TASK'         # props:  body, due_date, status
+    TASK = 'TASK'         # props:  body, timestamp, status
     CALL = 'CALL'         # TODO
     EMAIL = 'EMAIL'       # TODO
     MEETING = 'MEETING'   # TODO
@@ -38,7 +38,7 @@ module Hubspot
         engagement.merge({ timestamp: params[:timestamp].to_id }) if params[:timestamp].present?
         engagement.merge({ onwerId: params[:owner_id] }) if params[:owner_id].present?
 
-        assc_hash = { associations: { contactIds: (contactids.is_a?(Array) ? contactids : [contactids]) } }
+        assc_hash = { associations: { contactIds: [contactid]) } }
         meta_hash = { metadata: { body: params[:body] } }
         post_data = [{ engagement: engagement }, assc_hash, meta_hash].inject(&:merge)
 
