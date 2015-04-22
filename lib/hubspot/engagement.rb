@@ -106,8 +106,7 @@ module Hubspot
     # @param params [Hash] hash of properties to update
     # @return [Hubspot::Engagement] self
     def update!(params)
-      query = { metadata: params }
-      response = Hubspot::Connection.put_json(UPDATE_ENGAGEMENT_PATH, params: { engagement_id: id }, body: query)
+      response = Hubspot::Connection.put_json(UPDATE_ENGAGEMENT_PATH, params: { engagement_id: id }, body: params)
       @properties.merge!(params)
       self
     end
