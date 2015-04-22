@@ -36,7 +36,6 @@ module Hubspot
 
         engagement = { active: true, type: type }
         engagement.merge({ timestamp: params[:timestamp].to_i }) if params[:timestamp].present?
-puts "timestamp: " + params[:timestamp].to_i.to_s if params[:timestamp].present?
         engagement.merge({ onwerId: params[:owner_id] }) if params[:owner_id].present?
 
         assc_hash = { associations: { contactIds: [contactid] } }
@@ -108,7 +107,7 @@ puts "timestamp: " + params[:timestamp].to_i.to_s if params[:timestamp].present?
     # @return [Hubspot::Engagement] self
     def update!(params)
       query = { metadata: params }
-      response = Hubspot::Connection.post_json(UPDATE_ENGAGEMENT_PATH, params: { engagement_id: id }, body: query)
+      response = Hubspot::Connection.put_json(UPDATE_ENGAGEMENT_PATH, params: { engagement_id: id }, body: query)
       @properties.merge!(params)
       self
     end

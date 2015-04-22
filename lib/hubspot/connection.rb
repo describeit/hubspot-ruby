@@ -10,6 +10,16 @@ module Hubspot
         response.parsed_response
       end
 
+      def put_json(path, opts)
+        no_parse = opts[:params].delete(:no_parse) { false }
+
+        url = generate_url(path, opts[:params])
+        response = put(url, body: opts[:body].to_json, headers: { 'Content-Type' => 'application/json' }, format: :json)
+        raise(Hubspot::RequestError.new(response)) unless response.success?
+
+        no_parse ? response : response.parsed_response
+      end
+
       def post_json(path, opts)
         no_parse = opts[:params].delete(:no_parse) { false }
 
