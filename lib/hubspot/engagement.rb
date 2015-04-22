@@ -35,7 +35,7 @@ module Hubspot
         end
 
         engagement = { active: true, type: type }
-        engagement.merge({ timestamp: params[:timestamp].to_id }) if params[:timestamp].present?
+        engagement.merge({ timestamp: params[:timestamp].to_i }) if params[:timestamp].present?
         engagement.merge({ onwerId: params[:owner_id] }) if params[:owner_id].present?
 
         assc_hash = { associations: { contactIds: [contactid] } }
