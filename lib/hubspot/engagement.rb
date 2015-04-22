@@ -119,7 +119,7 @@ module Hubspot
       metadata.merge({ timestamp: params[:timestamp].to_i }) if params[:timestamp].present?
 
       post_data = [{ engagement: engagement }, { metadata: metadata }].inject(&:merge)
-
+debugger
       response = Hubspot::Connection.put_json(UPDATE_ENGAGEMENT_PATH, params: { engagement_id: id }, body: params)
       @properties.merge!( response["metadata"] )
       @engagement.merge!( response["engagement"] )
