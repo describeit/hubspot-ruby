@@ -35,11 +35,11 @@ module Hubspot
         end
 
         engagement = { active: true, type: type }
-        engagement.merge({ timestamp: params[:timestamp].to_i }) if params[:timestamp].present?
-        engagement.merge({ onwerId: params[:owner_id] }) if params[:owner_id].present?
+        engagement.merge!({ timestamp: params[:timestamp].to_i }) if params[:timestamp].present?
+        engagement.merge!({ onwerId: params[:owner_id] }) if params[:owner_id].present?
 
         metadata = { body: params[:body] }
-        metadata.merge({ timestamp: params[:timestamp].to_i }) if params[:timestamp].present?
+        metadata.merge!({ timestamp: params[:timestamp].to_i }) if params[:timestamp].present?
 
         assc_hash = { associations: { contactIds: [contactid] } }
         post_data = [{ engagement: engagement }, { metadata: metadata }, assc_hash].inject(&:merge)
@@ -109,17 +109,17 @@ module Hubspot
     # @return [Hubspot::Engagement] self
     def update!(params)
       engagement = {}
-      engagement.merge({ active: params[:active] }) if params[:active].present?
-      engagement.merge({ type: params[:type] }) if params[:type].present?
-      engagement.merge({ timestamp: params[:timestamp].to_i }) if params[:timestamp].present?
-      engagement.merge({ onwerId: params[:owner_id] }) if params[:owner_id].present?
+      engagement.merge!({ active: params[:active] }) if params[:active].present?
+      engagement.merge!({ type: params[:type] }) if params[:type].present?
+      engagement.merge!({ timestamp: params[:timestamp].to_i }) if params[:timestamp].present?
+      engagement.merge!({ onwerId: params[:owner_id] }) if params[:owner_id].present?
 
       metadata = {}
-      metadata.merge({ body: params[:body] }) if params[:body].present?
-      metadata.merge({ timestamp: params[:timestamp].to_i }) if params[:timestamp].present?
+      metadata.merge!({ body: params[:body] }) if params[:body].present?
+      metadata.merge!({ timestamp: params[:timestamp].to_i }) if params[:timestamp].present?
 
       post_data = [{ engagement: engagement }, { metadata: metadata }].inject(&:merge)
-debugger
+
       response = Hubspot::Connection.put_json(UPDATE_ENGAGEMENT_PATH, params: { engagement_id: id }, body: params)
       @properties.merge!( response["metadata"] )
       @engagement.merge!( response["engagement"] )
