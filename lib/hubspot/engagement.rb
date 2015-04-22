@@ -39,7 +39,6 @@ module Hubspot
         engagement.merge!({ onwerId: params[:owner_id] }) if params[:owner_id].present?
 
         metadata = { body: params[:body] }
-        metadata.merge!({ timestamp: params[:timestamp].to_i }) if params[:timestamp].present?
 
         assc_hash = { associations: { contactIds: [contactid] } }
         post_data = [{ engagement: engagement }, { metadata: metadata }, assc_hash].inject(&:merge)
@@ -116,7 +115,6 @@ module Hubspot
 
       metadata = {}
       metadata.merge!({ body: params[:body] }) if params[:body].present?
-      metadata.merge!({ timestamp: params[:timestamp].to_i }) if params[:timestamp].present?
 
       param_data = [{ engagement: engagement }, { metadata: metadata }].inject(&:merge)
 
