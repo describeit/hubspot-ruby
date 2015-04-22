@@ -118,9 +118,9 @@ module Hubspot
       metadata.merge!({ body: params[:body] }) if params[:body].present?
       metadata.merge!({ timestamp: params[:timestamp].to_i }) if params[:timestamp].present?
 
-      post_data = [{ engagement: engagement }, { metadata: metadata }].inject(&:merge)
+      param_data = [{ engagement: engagement }, { metadata: metadata }].inject(&:merge)
 
-      response = Hubspot::Connection.put_json(UPDATE_ENGAGEMENT_PATH, params: { engagement_id: id }, body: params)
+      response = Hubspot::Connection.put_json(UPDATE_ENGAGEMENT_PATH, params: { engagement_id: id }, body: param_data)
       @properties.merge!( response["metadata"] )
       @engagement.merge!( response["engagement"] )
       self
