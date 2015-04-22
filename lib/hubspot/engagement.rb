@@ -35,7 +35,7 @@ module Hubspot
         end
 
         engagement = { active: true, type: type }
-        engagement.merge!({ timestamp: params[:timestamp].to_i }) if params[:timestamp].present?
+        engagement.merge!({ timestamp: (params[:timestamp].to_i.to_s + '000') }) if params[:timestamp].present?
         engagement.merge!({ onwerId: params[:owner_id] }) if params[:owner_id].present?
 
         metadata = { body: params[:body] }
@@ -110,7 +110,7 @@ module Hubspot
       engagement = {}
       engagement.merge!({ active: params[:active] }) if params[:active].present?
       engagement.merge!({ type: params[:type] }) if params[:type].present?
-      engagement.merge!({ timestamp: params[:timestamp].to_i }) if params[:timestamp].present?
+      engagement.merge!({ timestamp: (params[:timestamp].to_i.to_s + '000') }) if params[:timestamp].present?
       engagement.merge!({ onwerId: params[:owner_id] }) if params[:owner_id].present?
 
       metadata = {}
