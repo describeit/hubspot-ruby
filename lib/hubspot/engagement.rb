@@ -36,7 +36,7 @@ module Hubspot
 
         engagement = { active: true, type: type }
         engagement.merge!({ timestamp: (params[:timestamp].to_i.to_s + '000') }) if params[:timestamp].present?
-        engagement.merge!({ onwerId: params[:owner_id] }) if params[:owner_id].present?
+        engagement.merge!({ ownerId: params[:owner_id] }) if params[:owner_id].present?
 
         metadata = { body: params[:body] }
 
